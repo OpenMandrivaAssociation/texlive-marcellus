@@ -12,7 +12,8 @@ Source0:	https://mirrors.ctan.org/systems/texlive/tlnet/archive/marcellus.r%{tl_
 Source1:	https://mirrors.ctan.org/systems/texlive/tlnet/archive/marcellus.doc.r%{tl_revision}.tar.xz
 BuildArch:	noarch
 BuildSystem:	texlive
-Provides:	texlive(%{tl_name}) = %{tl_revision}
+Requires:	texlive-tlpkg
+Provides:	texlive(%{tl_name}) = %{version}
 
 %description
 This package provides LaTeX, pdfLaTeX, XeLaTeX and LuaLaTeX support for
@@ -21,3 +22,10 @@ Marcellus is a flared-serif family, inspired by classic Roman
 inscription letterforms. There is currently just a regular weight and
 small-caps. The regular weight will be silently substituted for bold.
 
+
+%install -a
+mkdir -p %{buildroot}%{_texmf_updmap_d}
+cat > %{buildroot}%{_texmf_updmap_d}/%{tl_name} <<'TL_DROPIN_EOF'
+# from marcellus:
+Map marcellus.map
+TL_DROPIN_EOF
